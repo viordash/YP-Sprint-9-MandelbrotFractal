@@ -27,7 +27,6 @@ private:
 
 class WaitForFPS {
 public:
-
 };
 
 class MandelbrotApp {

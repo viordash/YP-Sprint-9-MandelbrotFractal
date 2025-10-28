@@ -7,7 +7,6 @@
 
 class SfmlEventHandler {
 public:
-
     template <typename Receiver>
     struct OperationState {
         Receiver receiver_;
@@ -24,7 +23,6 @@ public:
             : receiver_{std::forward<R>(r)}, window_{window}, render_settings_{render_settings}, state_{state},
               zoom_clock_{zoom_clock} {}
 
-        
         /* Ваш код здесь  */
 
     private:
@@ -33,7 +31,7 @@ public:
             while (window_.pollEvent(event)) {
                 switch (event.type) {
 
-                /* Ваш код здесь  */
+                    /* Ваш код здесь  */
 
                 default:
                     break;
@@ -76,7 +74,6 @@ public:
     /* Ваш код здесь  */
 
 private:
-
     sf::RenderWindow &window_;
     RenderSettings render_settings_;
     AppState &state_;
