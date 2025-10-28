@@ -19,7 +19,9 @@
         "twxs.cmake",
         "streetsidesoftware.code-spell-checker-russian",
         "streetsidesoftware.code-spell-checker",
-        "matepek.vscode-catch2-test-adapter"
+        "matepek.vscode-catch2-test-adapter",
+        "mhutchie.git-graph",
+        "donjayamanne.githistory"
       ]
     }
   },
