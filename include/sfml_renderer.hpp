@@ -35,8 +35,8 @@ public:
                     return;
                 }
 
-                for (std::uint32_t y = 0; y < self.render_settings_.height; ++y) {
-                    for (std::uint32_t x = 0; x < self.render_settings_.width; ++x) {
+                for (auto y = 0; y < self.render_settings_.height; ++y) {
+                    for (auto x = 0; x < self.render_settings_.width; ++x) {
                         const auto &color = self.render_result_.color_data[y][x];
                         self.image_.setPixel(x, y, sf::Color(color.r, color.g, color.b));
                     }
