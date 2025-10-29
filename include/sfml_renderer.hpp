@@ -32,6 +32,7 @@ public:
             try {
                 if (self.render_result_.color_data.empty()) {
                     stdexec::set_value(std::move(self.receiver_));
+                    return;
                 }
 
                 for (std::uint32_t y = 0; y < self.render_settings_.height; ++y) {

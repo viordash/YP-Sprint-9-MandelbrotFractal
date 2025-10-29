@@ -11,7 +11,7 @@
             "program": "${workspaceFolder}/build/MandelbrotFractal",
             "args": [],
             "cwd": "${workspaceFolder}/build",
-            "preLaunchTask": "GCC: Build Debug",
+            "preLaunchTask": "build",
             "initCommands": [
                 "settings set target.disable-aslr false"
             ]
@@ -23,7 +23,7 @@
             "program": "${workspaceFolder}/build/unit_tests",
             "args": [],
             "cwd": "${workspaceFolder}/build",
-            "preLaunchTask": "GCC: Build Debug",
+            "preLaunchTask": "build",
             "initCommands": [
                 "settings set target.disable-aslr false"
             ]
