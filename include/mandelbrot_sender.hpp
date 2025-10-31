@@ -52,10 +52,10 @@ struct MandelbrotSender {
     RenderSettings settings_;
     PixelRegion region_;
 
-    template <class Self, class Env>
-    friend auto tag_invoke(stdexec::get_completion_signatures_t, const Self &, Env) ->  //
-        stdexec::completion_signatures<stdexec::set_value_t(PixelMatrix),               //
-                                       stdexec::set_error_t(std::exception_ptr),        //
+    template <class Env>
+    friend auto tag_invoke(stdexec::get_completion_signatures_t, const MandelbrotSender &, Env) ->  //
+        stdexec::completion_signatures<stdexec::set_value_t(PixelMatrix),                           //
+                                       stdexec::set_error_t(std::exception_ptr),                    //
                                        stdexec::set_stopped_t()> {
         return {};
     }
