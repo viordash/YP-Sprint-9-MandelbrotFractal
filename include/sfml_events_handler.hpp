@@ -10,6 +10,12 @@ class SfmlEventHandler {
 public:
     using sender_concept = stdexec::sender_t;
 
+    using completion_signatures = stdexec::completion_signatures<  //
+        stdexec::set_value_t(),                                    //
+        stdexec::set_error_t(std::exception_ptr),                  //
+        stdexec::set_stopped_t()                                   //
+        >;
+
     template <typename Receiver>
     struct OperationState {
         Receiver receiver_;
@@ -111,13 +117,6 @@ public:
 
     SfmlEventHandler(sf::RenderWindow &window, RenderSettings render_settings, AppState &state, sf::Clock &zoom_clock)
         : window_{window}, render_settings_{render_settings}, state_{state}, zoom_clock_{zoom_clock} {}
-
-    template <class Env>
-    friend auto tag_invoke(stdexec::get_completion_signatures_t, const SfmlEventHandler &, Env)
-        -> stdexec::completion_signatures<stdexec::set_value_t(), stdexec::set_error_t(std::exception_ptr),
-                                          stdexec::set_stopped_t()> {
-        return {};
-    }
 
     template <stdexec::receiver Receiver>
     friend auto tag_invoke(stdexec::connect_t, SfmlEventHandler &&self, Receiver &&receiver)

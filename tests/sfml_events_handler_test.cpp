@@ -8,10 +8,9 @@
 
 struct TestSinkReceiver {
     using receiver_concept = stdexec::receiver_t;
-    template <typename... Args>
-    void tag_invoke(stdexec::set_value_t, TestSinkReceiver &&, Args &&...) noexcept {}
-    void tag_invoke(stdexec::set_error_t, TestSinkReceiver &&, std::exception_ptr) noexcept {}
-    void tag_invoke(stdexec::set_stopped_t, TestSinkReceiver &&) noexcept {}
+    void set_value(int value) noexcept {}
+    void set_error(std::exception_ptr e) noexcept {}
+    void set_stopped() noexcept {}
 };
 
 class TestableOperationState : public SfmlEventHandler::OperationState<TestSinkReceiver> {

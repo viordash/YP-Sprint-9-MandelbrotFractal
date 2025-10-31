@@ -12,6 +12,12 @@ class SFMLRender {
 public:
     using sender_concept = stdexec::sender_t;
 
+    using completion_signatures = stdexec::completion_signatures<  //
+        stdexec::set_value_t(),                                    //
+        stdexec::set_error_t(std::exception_ptr),                  //
+        stdexec::set_stopped_t()                                   //
+        >;
+
     template <typename Receiver>
     struct OperationState {
         Receiver receiver_;
@@ -67,14 +73,6 @@ public:
                sf::RenderWindow &window, RenderSettings render_settings)
         : render_result_(std::move(render_result)), image_{image}, texture_{texture}, sprite_{sprite}, window_{window},
           render_settings_{render_settings} {}
-
-    template <class Env>
-    friend auto tag_invoke(stdexec::get_completion_signatures_t, const SFMLRender &, Env) ->  //
-        stdexec::completion_signatures<stdexec::set_value_t(),                                //
-                                       stdexec::set_error_t(std::exception_ptr),              //
-                                       stdexec::set_stopped_t()> {
-        return {};
-    }
 
     template <stdexec::receiver Receiver>
     friend auto tag_invoke(stdexec::connect_t, SFMLRender &&self, Receiver &&receiver)

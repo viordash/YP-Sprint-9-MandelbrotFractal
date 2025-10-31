@@ -48,17 +48,15 @@ struct MandelbrotOperationState {
 struct MandelbrotSender {
     using sender_concept = stdexec::sender_t;
 
+    using completion_signatures = stdexec::completion_signatures<  //
+        stdexec::set_value_t(PixelMatrix),                         //
+        stdexec::set_error_t(std::exception_ptr),                  //
+        stdexec::set_stopped_t()                                   //
+        >;
+
     mandelbrot::ViewPort viewport_;
     RenderSettings settings_;
     PixelRegion region_;
-
-    template <class Env>
-    friend auto tag_invoke(stdexec::get_completion_signatures_t, const MandelbrotSender &, Env) ->  //
-        stdexec::completion_signatures<stdexec::set_value_t(PixelMatrix),                           //
-                                       stdexec::set_error_t(std::exception_ptr),                    //
-                                       stdexec::set_stopped_t()> {
-        return {};
-    }
 
     template <stdexec::receiver Receiver>
     friend auto tag_invoke(stdexec::connect_t, MandelbrotSender &&self, Receiver &&receiver)

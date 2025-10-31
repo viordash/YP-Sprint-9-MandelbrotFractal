@@ -6,6 +6,12 @@ class CalculateMandelbrotAsyncSender {
 public:
     using sender_concept = stdexec::sender_t;
 
+    using completion_signatures = stdexec::completion_signatures<  //
+        stdexec::set_value_t(RenderResult),                        //
+        stdexec::set_error_t(std::exception_ptr),                  //
+        stdexec::set_stopped_t()                                   //
+        >;
+
     template <typename Receiver>
     struct OperationState {
         Receiver receiver_;
@@ -48,14 +54,6 @@ public:
     explicit CalculateMandelbrotAsyncSender(AppState &state, RenderSettings render_settings,
                                             MandelbrotRenderer &renderer)
         : state_(state), render_settings_{render_settings}, renderer_{renderer} {}
-
-    template <class Env>
-    friend auto tag_invoke(stdexec::get_completion_signatures_t, const CalculateMandelbrotAsyncSender &, Env) ->  //
-        stdexec::completion_signatures<stdexec::set_value_t(RenderResult),                                        //
-                                       stdexec::set_error_t(std::exception_ptr),                                  //
-                                       stdexec::set_stopped_t()> {
-        return {};
-    }
 
     template <stdexec::receiver Receiver>
     friend auto tag_invoke(stdexec::connect_t, CalculateMandelbrotAsyncSender &&self, Receiver &&receiver)
