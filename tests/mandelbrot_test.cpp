@@ -46,3 +46,28 @@ TEST(CalculateMandelbrotAsyncSenderTest, Skips_Render_When_Not_Needed) {
     ASSERT_TRUE(render_result.color_data.empty());
     ASSERT_FALSE(state.need_rerender);
 }
+
+TEST(CalculateMandelbrotAsyncSenderTest, Handles_Invalid_Settings) {
+    AppState state;
+    state.need_rerender = true;
+
+    MandelbrotRenderer renderer;
+
+    {
+        RenderSettings settings_zero_width = {.width = 0, .height = 100};
+        CalculateMandelbrotAsyncSender sender{state, settings_zero_width, renderer};
+        EXPECT_NO_THROW(stdexec::sync_wait(std::move(sender)));
+    }
+
+    {
+        RenderSettings settings_zero_height = {.width = 100, .height = 0};
+        CalculateMandelbrotAsyncSender sender{state, settings_zero_height, renderer};
+        EXPECT_NO_THROW(stdexec::sync_wait(std::move(sender)));
+    }
+
+    {
+        RenderSettings settings_large_size = {.width = 10000, .height = 10000, .max_iterations = 1};
+        CalculateMandelbrotAsyncSender sender{state, settings_large_size, renderer};
+        EXPECT_NO_THROW(stdexec::sync_wait(std::move(sender)));
+    }
+}

@@ -111,3 +111,22 @@ TEST(SfmlEventHandlerTest, ZoomToPoint) {
     EXPECT_NEAR(state.viewport.y_min, -1.0, 1e-9);
     EXPECT_NEAR(state.viewport.y_max, 1.0, 1e-9);
 }
+
+TEST(SfmlEventHandlerTest, Handles_PollEvent_Exception) {
+    AppState state;
+    RenderSettings settings;
+    sf::Clock clock;
+    sf::RenderWindow window;
+
+    TestSinkReceiver receiver;
+    TestableOperationState test_op_state(receiver, window, settings, state, clock);
+
+    EXPECT_CALL(test_op_state, pollEvent).WillOnce(testing::Throw(std::runtime_error("pollEvent failed")));
+
+    try {
+        test_op_state.PublicMorozov_HandleEvents();
+        FAIL() << "No exception was thrown";
+    } catch (const std::runtime_error &) {
+        SUCCEED();
+    }
+}
