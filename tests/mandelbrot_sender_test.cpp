@@ -7,13 +7,11 @@
 #include "types.hpp"
 
 TEST(MandelbrotSenderTest, Calculates_Correctly) {
-    const int rows = 3;
-    const int cols = 3;
-    RenderSettings settings;
-    settings.width = cols;
-    settings.height = rows;
-    settings.max_iterations = 100;
-    settings.escape_radius = 2;
+    const std::uint32_t width = 3;
+    const std::uint32_t height = 3;
+    const std::uint32_t max_iter = 100;
+
+    RenderSettings settings{.width = width, .height = height, .max_iterations = max_iter, .escape_radius = 2.0};
 
     mandelbrot::ViewPort viewport{.x_min = -1.5, .x_max = 1.5, .y_min = -1.5, .y_max = 1.5};
 
@@ -27,8 +25,8 @@ TEST(MandelbrotSenderTest, Calculates_Correctly) {
     ASSERT_TRUE(result.has_value());
     auto &[matrix] = result.value();
 
-    ASSERT_EQ(matrix.size(), rows);
-    ASSERT_EQ(matrix[0].size(), cols);
+    ASSERT_EQ(matrix.size(), width);
+    ASSERT_EQ(matrix[0].size(), height);
 
     const auto &center_pixel = matrix[1][1];
     ASSERT_EQ(center_pixel, settings.max_iterations);
