@@ -10,6 +10,8 @@ RUN apt install -y python3-minimal python3-pip pipx git less vim sudo cmake make
 # Install additional tools and libraries
 RUN apt install -y libsfml-dev
 
+RUN apt install -y linux-tools-generic
+
 # Cleanup
 RUN apt autoremove -y \
     && apt autoclean \
