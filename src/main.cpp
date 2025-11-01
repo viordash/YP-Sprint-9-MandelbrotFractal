@@ -28,7 +28,7 @@ private:
 class WaitForFPS {
 public:
     explicit WaitForFPS(FrameClock &frame_clock, unsigned int fps)
-        : frame_clock_{frame_clock}, frame_duration_{1'000'000 / fps} {
+        : frame_clock_{frame_clock}, frame_duration_{std::chrono::microseconds(1s).count() / fps} {
         assert(fps > 0);
     }
 
